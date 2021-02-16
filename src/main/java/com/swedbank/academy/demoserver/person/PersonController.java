@@ -1,5 +1,6 @@
 package com.swedbank.academy.demoserver.person;
 
+import com.swedbank.academy.demoserver.person.exception.PersonAlreadyExistException;
 import com.swedbank.academy.demoserver.person.exception.PersonNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -48,13 +49,23 @@ public class PersonController {
             //log.error("deletePerson", e);
             return ResponseEntity.notFound().build();
         }
-
     }
 
-    @PutMapping("{pid}")
-    public ResponseEntity<Person> updatePerson(@PathVariable("pid") Person person){
+    @PostMapping
+    public ResponseEntity<Void> addPerson(@RequestBody Person person) throws PersonAlreadyExistException{
         try{
-            return null;
+            personService.addPerson(person);
+            return ResponseEntity.ok().build();
+        } catch (PersonAlreadyExistException e){
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @PutMapping
+    public ResponseEntity<Void> updatePerson(@RequestBody Person person) throws PersonNotFoundException{
+        try{
+            personService.updatePerson(person);
+            return ResponseEntity.ok().build();
         } catch (PersonNotFoundException e){
             return ResponseEntity.notFound().build();
         }

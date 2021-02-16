@@ -12,5 +12,6 @@ CREATE TABLE person (
 
 --Person data
 insert into person (pid, first_name, middle_name, last_name, email, phone) values (38202020577, 'Testas', '', 'Testauskas', 'test@test.com', '+37060035645');
+insert into person (pid, first_name, middle_name, last_name, email, phone) values (38202020578, 'Tess', '', 'Tesuskas', 'test@tt.com', '+370600345');
 
 

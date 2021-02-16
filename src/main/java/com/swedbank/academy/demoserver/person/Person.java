@@ -25,8 +25,6 @@ public class Person {
     @Column(name = "first_name")
     private String name;
 
-    @NotNull
-    @NotBlank
     @Column(name = "middle_name")
     private String middleName;
 

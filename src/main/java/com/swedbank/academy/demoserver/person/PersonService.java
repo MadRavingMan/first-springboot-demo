@@ -1,5 +1,6 @@
 package com.swedbank.academy.demoserver.person;
 
+import com.swedbank.academy.demoserver.person.exception.PersonAlreadyExistException;
 import com.swedbank.academy.demoserver.person.exception.PersonNotFoundException;
 
 import java.util.List;
@@ -12,9 +13,8 @@ public interface PersonService {
 
     void delete(long pid) throws PersonNotFoundException;
 
-    Person updatePerson(Person person) throws  PersonNotFoundException;
+    void addPerson(Person person) throws PersonAlreadyExistException;
 
-    //    void addPerson(Person person);
-
+    void updatePerson(Person person) throws PersonNotFoundException;
 
 }

@@ -1,5 +1,6 @@
 package com.swedbank.academy.demoserver.person;
 
+import com.swedbank.academy.demoserver.person.exception.PersonAlreadyExistException;
 import com.swedbank.academy.demoserver.person.exception.PersonNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,8 +35,25 @@ public class PersonServiceImp implements PersonService {
     }
 
     @Override
-    public Person updatePerson(Person person) throws PersonNotFoundException {
-        Person person1 =  personRepository.findById(person.getPid()).orElseThrow(() -> new PersonNotFoundException(person.getPid()));
-        return null;
+    public void addPerson(Person person) throws PersonAlreadyExistException {
+        if (personRepository.findById(person.getPid()).isEmpty()) {
+            personRepository.save(person);
+        } else {
+            new PersonAlreadyExistException(person.getPid());
+        }
+    }
+
+
+    @Override
+    public void updatePerson(Person updatePerson) throws PersonNotFoundException {
+        Person existingPerson = personRepository.findById(updatePerson.getPid())
+                .orElseThrow(() -> new PersonNotFoundException(updatePerson.getPid()));
+
+        existingPerson.setName(updatePerson.getName());
+        existingPerson.setMiddleName(updatePerson.getMiddleName());
+        existingPerson.setSurname(updatePerson.getSurname());
+        existingPerson.setEmail(updatePerson.getEmail());
+        existingPerson.setPhone(updatePerson.getPhone());
+        personRepository.save(existingPerson);
     }
 }
